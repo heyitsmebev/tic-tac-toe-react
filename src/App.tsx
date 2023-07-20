@@ -1,8 +1,10 @@
+import BoardGame from "./components/GameBoard";
+
 function App() {
-    return (
-        <div>
-        </div>
-    );
-    }
-    export default App;
-    
+  return (
+    <div>
+      <BoardGame />
+    </div>
+  );
+}
+export default App;
