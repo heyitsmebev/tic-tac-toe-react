@@ -1,5 +1,5 @@
 import { Box, Button, Menu, MenuItem } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 
 type MenuProps = {
   setPlayersMovesState: React.Dispatch<
@@ -16,13 +16,22 @@ type MenuProps = {
 
 const ActionsMenu = ({ setPlayersMovesState, setGameResults, setTotalMoveCounter }: MenuProps) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [selected, setSelected] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    setOpen(true);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+    setOpen(false);
+  };
+
+  const handleMenuItemClick = () => {
+    setAnchorEl(null);
+    setSelected(true);
     setPlayersMovesState([
       {
         id: 1,
@@ -35,14 +44,21 @@ const ActionsMenu = ({ setPlayersMovesState, setGameResults, setTotalMoveCounter
     ]);
     setGameResults(undefined);
     setTotalMoveCounter(0);
+    setOpen(false);
   };
 
   return (
-    <Box width={100} sx={{ float: "right" }}>
-      <Button onClick={handleMenuClick}>Menu</Button>
-      <Menu id='basic-menu' anchorEl={anchorEl} onClose={handleClose} open={Boolean(anchorEl)}>
-        <MenuItem onClick={handleClose}>New Game</MenuItem>
-        <MenuItem onClick={handleClose}>Reset</MenuItem>
+    <Box width={300} sx={{ backgroundColor: "#ffb048", borderRadius: "16px", width: 300, margin: "auto" }}>
+      <Button fullWidth onClick={handleMenuClick} id='basic-menu'>
+        Menu Actions
+      </Button>
+      <Menu id='basic-menu' anchorEl={anchorEl} onClose={handleClose} open={open} sx={{ width: "100%" }}>
+        <MenuItem onClick={handleMenuItemClick} selected={selected}>
+          New Game
+        </MenuItem>
+        <MenuItem onClick={handleMenuItemClick} selected={selected}>
+          Reset
+        </MenuItem>
       </Menu>
     </Box>
   );

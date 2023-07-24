@@ -1,8 +1,8 @@
-import { Box, Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import ActionsMenu from "./ActionsMenu";
 import { useEffect, useMemo, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faO, faX } from "@fortawesome/free-solid-svg-icons";
+
+import Squares from "./Squares";
 
 const BoardGame = () => {
   const winningCombination = useMemo(
@@ -77,16 +77,12 @@ const BoardGame = () => {
         mt: 5,
       }}
     >
-      <Box>
-        <Typography variant='h2' sx={{ color: "white", textAlign: "center" }}>
-          Tic Tac Toe Game
-        </Typography>
-        <ActionsMenu
-          setPlayersMovesState={setPlayersMovesState}
-          setGameResults={setGameResults}
-          setTotalMoveCounter={setTotalMoveCounter}
-        />
-      </Box>
+      <Typography variant='h2' sx={{ color: "white", textAlign: "center" }}>
+        Tic Tac Toe Game
+      </Typography>
+      <Typography variant='h5' sx={{ color: "#ffb048", textAlign: "center" }}>
+        {gameResults ? gameResults : `Player ${playersTurn} Turn`}
+      </Typography>
       <Grid
         container
         sx={{
@@ -98,43 +94,23 @@ const BoardGame = () => {
           const existingMove = playersMovesState.find((player) => player.selectedMovesArr.includes(squareId));
 
           return (
-            <Grid
-              item
-              xs={3}
+            <Squares
+              squareId={squareId}
+              existingMove={existingMove}
+              handleMoves={handleMoves}
+              playersTurn={playersTurn}
+              gameResults={gameResults}
+              totalMoveCounter={totalMoveCounter}
               key={squareId}
-              data-id={squareId}
-              onClick={() => {
-                if (existingMove || gameResults) return;
-                handleMoves(squareId, playersTurn, totalMoveCounter);
-              }}
-              sx={{
-                backgroundColor: "white",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "125px",
-                m: 1,
-                borderRadius: 1,
-              }}
-            >
-              {existingMove && (
-                <>
-                  {existingMove.id === 1 ? (
-                    <FontAwesomeIcon icon={faX} size='2xl' style={{ color: "#46a3ff" }} />
-                  ) : (
-                    <FontAwesomeIcon icon={faO} size='2xl' style={{ color: "#ff827e" }} />
-                  )}
-                </>
-              )}
-            </Grid>
+            />
           );
         })}
       </Grid>
-      <Box sx={{ backgroundColor: "#ffb048", borderRadius: "16px", width: 300, margin: "auto" }}>
-        <Typography variant='h4' sx={{ color: "white", textAlign: "center" }}>
-          {gameResults ? gameResults : `Player ${playersTurn} Turn`}
-        </Typography>
-      </Box>
+      <ActionsMenu
+        setPlayersMovesState={setPlayersMovesState}
+        setGameResults={setGameResults}
+        setTotalMoveCounter={setTotalMoveCounter}
+      />
     </Container>
   );
 };
