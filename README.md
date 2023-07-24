@@ -1,1 +1,1 @@
-![image](https://github.com/heyitsmebev/tic-tac-toe-react/assets/53159604/0030253c-cbcf-4728-a983-b8722f8af203)
+![image](https://github.com/heyitsmebev/tic-tac-toe-react/assets/53159604/4f13f237-c04a-4084-9ef3-ab9b88a96432)
