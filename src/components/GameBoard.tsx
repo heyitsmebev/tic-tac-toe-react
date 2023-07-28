@@ -1,8 +1,8 @@
 import { Container, Grid, Typography } from "@mui/material";
+import Squares from "./Squares";
+
 import ActionsMenu from "./ActionsMenu";
 import { useEffect, useMemo, useState } from "react";
-
-import Squares from "./Squares";
 
 const BoardGame = () => {
   const winningCombination = useMemo(
@@ -25,11 +25,11 @@ const BoardGame = () => {
   const [playersMovesState, setPlayersMovesState] = useState<{ id: number; selectedMovesArr: number[] }[]>([
     {
       id: 1,
-      selectedMovesArr: [],
+      selectedMovesArr: [1, 2, 3],
     },
     {
       id: 2,
-      selectedMovesArr: [],
+      selectedMovesArr: [3, 6],
     },
   ]);
 
@@ -48,17 +48,15 @@ const BoardGame = () => {
   useEffect(() => {
     let hasWinner = false;
     for (const player of playersMovesState) {
-      if (player.selectedMovesArr.length >= 3) {
-        for (const combo of winningCombination) {
-          //we are creating a new array using filter method.
-          //this new array will have elements that's included in the combo arrays and calculate the length of it.
-          const matchingElementsCount = player.selectedMovesArr.filter((element) => combo.includes(element)).length;
-          const atLeastThreeElementsPresent = matchingElementsCount >= 3;
+      for (const combo of winningCombination) {
+        //we are creating a new array using filter method.
+        //this new array will have elements that's included in the combo arrays and calculate the length of it.
+        const matchingElementsCount = player.selectedMovesArr.filter((element) => combo.includes(element)).length;
+        const atLeastThreeElementsPresent = matchingElementsCount >= 3;
 
-          if (atLeastThreeElementsPresent) {
-            setGameResults(`Winner is ${player.id}`);
-            hasWinner = true;
-          }
+        if (atLeastThreeElementsPresent) {
+          setGameResults(`Winner is ${player.id}`);
+          hasWinner = true;
         }
       }
     }
